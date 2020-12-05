@@ -5,7 +5,10 @@
     liberation_ttf
     fira
     fira-code
-    plank
+    materia-theme
+    roboto
+    ubuntu_font_family
+    qogir-icon-theme
     papirus-icon-theme
   ];
 }

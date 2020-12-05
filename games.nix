@@ -1,12 +1,14 @@
 { pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     steam
     steam-run
-    discord
     multimc
-    dwarf-fortress-packages.dwarf-fortress-full
     retroarch
   ];
+  nixpkgs.config.retroarch = {
+    enableMGBA = true;
+  };
 }

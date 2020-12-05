@@ -6,11 +6,13 @@
 
   imports = [
     ./internet.nix
+    ./creation.nix
     ./games.nix
     ./development.nix
     ./art.nix
     ./rice.nix
     ./utilities.nix
+    ./kitty.nix
     ./zsh.nix
   ];
  

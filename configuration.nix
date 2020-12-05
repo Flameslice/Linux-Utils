@@ -10,11 +10,23 @@
       ./hardware-configuration.nix
       ./TheVaultMount.nix
       ./kristian.nix
+      ./iphone.nix
     ];
+
+  iphone.enable = true;
+  iphone.user = "kristian";
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Enable Swap space  
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = 32768;
+    }
+  ];
 
   networking.hostName = "NixOS"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -27,7 +39,7 @@
   networking.interfaces.wlp38s0.useDHCP = true;
 
   # Enable samba
-  services.gvfs.enable = true;
+  services.gvfs.enable = true; 
   # services.gvfs.packages = pkgs.gvfs;
   
   # Configure network proxy if necessary
@@ -47,11 +59,25 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim refind efibootmgr os-prober
+    wget vim refind efibootmgr os-prober dosfstools btrfs-progs ntfs3g linuxPackages.v4l2loopback
+    piper glxinfo zfs gparted
   ];
+
+  # Enable ratbag
+  services.ratbagd.enable = true;
 
   # Enable steam hardware support
   hardware.steam-hardware.enable = true;
+
+  # Enable xpadneo
+  hardware.xpadneo.enable = true;
+
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  
+  # Disable ertm for Xbox One controller support
+  boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -67,11 +93,10 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.teamviewer.enable = true;
-
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 24800 ];
+  networking.firewall.allowedUDPPorts = [ 24800 ];
+  networking.firewall.extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -83,6 +108,10 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.daemon.config = { 
+    default-sample-rate = "48000"; 
+    default-sample-format = "s16le";
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -99,7 +128,9 @@
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
 
   # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "kristian";
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

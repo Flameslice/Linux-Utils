@@ -5,6 +5,7 @@
     jdk
     jetbrains.idea-community
     godot
-    qt5.full
+    python38
+    python38Packages.selenium
   ];
 }
