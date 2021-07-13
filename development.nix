@@ -1,11 +1,10 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
-    jdk
+    jdk8
     jetbrains.idea-community
-    godot
-    python38
-    python38Packages.selenium
+    git
+    python3
   ];
 }

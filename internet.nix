@@ -2,10 +2,10 @@
 
 {
   home.packages = with pkgs; [
-    deluge
-    firefox-beta-bin
+    firefox
     vivaldi
+    vivaldi-ffmpeg-codecs
     discord
-    zoom-us
+    transmission-gtk
   ];
-}  
+}

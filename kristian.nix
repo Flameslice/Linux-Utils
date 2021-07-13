@@ -11,7 +11,6 @@ in {
   ];
 
   users.users.kristian = {
-    extraGroups = [ "wheel" "input" "video" ];
     shell = pkgs.zsh;
   };
   home-manager.users.kristian = import /home/kristian/.config/nixpkgs/home.nix;

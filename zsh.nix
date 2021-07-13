@@ -1,3 +1,4 @@
+
 { config, pkgs, ... }:
 
 {
@@ -11,8 +12,10 @@
     };
     
     oh-my-zsh = { 
+      enable = true;
       plugins = [ "thefuck" ];
       theme = "pygmalion";
+      #theme = "fishy";
     };
 
     shellAliases = {
@@ -20,6 +23,10 @@
       nru = "sudo nixos-rebuild switch --upgrade";
       hcfg = "cd ~/.config/nixpkgs/";
       scfg = "cd /etc/nixos/"; 
+      ncg = "sudo nix-collect-garbage";
+      ncgd = "sudo nix-collect-garbage -d";
     };
   };
+  
+  home.packages = with pkgs; [ thefuck ];
 }

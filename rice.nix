@@ -2,13 +2,10 @@
 
 {
   home.packages = with pkgs; [
-    liberation_ttf
-    fira
-    fira-code
-    materia-theme
-    roboto
-    ubuntu_font_family
-    qogir-icon-theme
-    papirus-icon-theme
+    gnomeExtensions.frippery-applications-menu
+    plank
+    juno-theme
+    gnomeExtensions.tweaks-in-system-menu
   ];
 }
+
